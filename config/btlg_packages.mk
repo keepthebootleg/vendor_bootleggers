@@ -13,28 +13,20 @@ PRODUCT_PACKAGES += \
 BOOTLEGGERS_BUILD_APPS_BUNDLE ?= true
 ## Adding our app bundle for AOSP and GApps
 ifeq ($(BOOTLEGGERS_BUILD_APPS_BUNDLE),true)
-    ifeq ($(WITH_GAPPS),true)
-        # TODO: Add our gapps bundle
-    else
-        PRODUCT_PACKAGES += \
-            Browser2 \
-            Calendar \
-            Camera2 \
-            Email \
-            Gallery2 \
-            Etar \
-            NotallyPrebuilt \
-            QPGallery \
-            MiXplorerPrebuilt \
-            Jelly \
-            Phonograph
-    endif
-else
+    $(warning "BTLG Packages: Bootleggers app bundle is included.")
     PRODUCT_PACKAGES += \
+        Camera2 \
+        Email \
+        Etar \
+        NotallyPrebuilt \
+        QPGallery \
+        MiXplorerPrebuilt \
         Jelly \
-        Camera2
-        
+        Phonograph
+else
+    $(warning "BTLG Packages: Bootleggers app bundle is not included.")
 endif
+
 
 ifeq ($(BOOTLEGGERS_BUILD_TYPE),Shishufied)
     PRODUCT_PACKAGES += \
@@ -86,6 +78,14 @@ PRODUCT_PACKAGES += \
 
 # Include Potato volume panels
 -include packages/modules/VolumePanelPlugins/plugins.mk
+
+# Inlcude Google Apps
+ifeq ($(WITH_GAPPS),true)
+    $(call inherit-product, vendor/gapps/common/common-vendor.mk)
+    $(warning "BTLG Packages: Prebuilt Google Apps is included")
+else
+    $(warning "BTLG Packages: Prebuilt Google Apps is not included")
+endif
 
 ### COMMENTED WASTELAND - MOVED TEMPORALLY HERE DUE TO WIP ###
 #
